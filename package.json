@@ -1,0 +1,33 @@
+{
+    "name": "karin-recreation",
+    "version": "0.0.0",
+    "description": "",
+    "homepage": "https://github.com/yifanwww/karin-recreation#readme",
+    "license": "MIT",
+    "author": "yifanwww <yifanw1101@gmail.com> (https://github.com/yifanwww)",
+    "bugs": {
+        "url": "https://github.com/yifanwww/karin-recreation/issues"
+    },
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yifanwww/karin-recreation.git"
+    },
+    "scripts": {
+        "build": "pnpm run --recursive --stream build",
+        "clean": "pnpm run --recursive --no-sort clean",
+        "format": "pnpm run format:root && pnpm run format:workspaces",
+        "format:root": "prettier --write \"**/*.{cjs,css,html,js,jsx,mjs,json,less,scss,ts,tsx,yaml,yml}\"",
+        "format:workspaces": "pnpm run --recursive --no-sort --stream format",
+        "typecheck": "pnpm run --recursive --no-sort --stream typecheck"
+    },
+    "engines": {
+        "node": ">=16"
+    },
+    "devDependencies": {
+        "@types/node": "^16.11.60",
+        "prettier": "2.8.0",
+        "sass": "^1.55.0",
+        "typescript": "4.9.4"
+    }
+}
