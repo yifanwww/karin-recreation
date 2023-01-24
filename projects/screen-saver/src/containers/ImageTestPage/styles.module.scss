@@ -1,0 +1,21 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 64px;
+}
+
+.image-info-panel {
+    display: flex;
+    gap: 32px;
+    height: 192px;
+    align-items: center;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+
+    padding: 16px;
+}
+
+.image-container {
+}

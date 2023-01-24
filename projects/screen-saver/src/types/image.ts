@@ -1,3 +1,8 @@
+export interface ImageSize {
+    height: number;
+    width: number;
+}
+
 export interface ImageMargin {
     top: number;
     right: number;
@@ -5,7 +10,9 @@ export interface ImageMargin {
     left: number;
 }
 
-export interface ImageConfig {
+export interface ImageInfo {
+    name: string;
     url: string;
+    size: ImageSize;
     margin: ImageMargin;
 }

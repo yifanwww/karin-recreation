@@ -1,35 +1,80 @@
-import { ImageConfig, ImageMargin } from 'src/types/image';
+import { ImageInfo } from 'src/types/image';
 
 import sticker_01_1 from './sticker-01.1 [transp-1].png';
 import sticker_01_2 from './sticker-01.2 [transp-1].png';
 import sticker_01_3 from './sticker-01.3 [transp-1].png';
 import sticker_01_4 from './sticker-01.4 [transp-1].png';
-import sticker_02_1 from './sticker-02.1 [origin].png';
-import sticker_02_4 from './sticker-02.4 [origin].png';
+import sticker_02_1 from './sticker-02.1 [origin].jpg';
+import sticker_02_4 from './sticker-02.4 [origin].jpg';
 
-interface ImageOptions {
-    margin?: Partial<ImageMargin>;
+function createImageInfos(infos: Record<string, Omit<ImageInfo, 'name'>>): Record<string, ImageInfo> {
+    return Object.fromEntries(Object.entries(infos).map(([name, info]) => [name, { ...info, name }]));
 }
 
-function createImageConfigs(url: string, options: ImageOptions): ImageConfig {
-    const { margin } = options;
-
-    return {
-        url,
+export const ImageAssets = createImageInfos({
+    sticker_01_1: {
+        url: sticker_01_1,
+        size: { height: 800, width: 800 },
         margin: {
-            bottom: margin?.bottom ?? 0,
-            left: margin?.left ?? 0,
-            right: margin?.right ?? 0,
-            top: margin?.top ?? 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0,
         },
-    };
-}
+    },
 
-export const ImageAssets: Record<string, ImageConfig> = {
-    sticker_01_1: createImageConfigs(sticker_01_1, {}),
-    sticker_01_2: createImageConfigs(sticker_01_2, {}),
-    sticker_01_3: createImageConfigs(sticker_01_3, {}),
-    sticker_01_4: createImageConfigs(sticker_01_4, {}),
-    sticker_02_1: createImageConfigs(sticker_02_1, {}),
-    sticker_02_4: createImageConfigs(sticker_02_4, {}),
-};
+    sticker_01_2: {
+        url: sticker_01_2,
+        size: { height: 800, width: 800 },
+        margin: {
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+        },
+    },
+
+    sticker_01_3: {
+        url: sticker_01_3,
+        size: { height: 800, width: 800 },
+        margin: {
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+        },
+    },
+
+    sticker_01_4: {
+        url: sticker_01_4,
+        size: { height: 800, width: 800 },
+        margin: {
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+        },
+    },
+
+    sticker_02_1: {
+        url: sticker_02_1,
+        size: { height: 800, width: 800 },
+        margin: {
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+        },
+    },
+
+    sticker_02_4: {
+        url: sticker_02_4,
+        size: { height: 800, width: 800 },
+        margin: {
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+        },
+    },
+});
