@@ -79,7 +79,7 @@
 
         {
             "name": "@karin/screen-saver",
-            "path": "packages/screen-saver"
+            "path": "projects/screen-saver"
         }
     ]
 }

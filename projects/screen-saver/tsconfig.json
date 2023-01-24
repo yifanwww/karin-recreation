@@ -1,0 +1,11 @@
+{
+    "extends": "../../configs/tsconfigs/tsconfig.react.esm.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "incremental": false,
+        "noEmit": true,
+        "rootDir": "src"
+    },
+    "include": ["src/**/*"],
+    "exclude": []
+}

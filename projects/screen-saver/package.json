@@ -1,0 +1,27 @@
+{
+    "name": "@karin/screen-saver",
+    "version": "0.0.0",
+    "description": "",
+    "homepage": "https://github.com/yifanwww/karin-recreation#readme",
+    "license": "MIT",
+    "author": "yifanwww <yifanw1101@gmail.com> (https://github.com/yifanwww)",
+    "bugs": {
+        "url": "https://github.com/yifanwww/karin-recreation/issues"
+    },
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yifanwww/karin-recreation.git",
+        "directory": "packages/screen-saver"
+    },
+    "browserslist": [
+        "last 9 chrome versions"
+    ],
+    "scripts": {
+        "build": "react-app-rewired build --config-overrides ../../configs/webpack/webpack.config.js",
+        "clean": "rimraf build",
+        "dev": "react-app-rewired start --config-overrides ../../configs/webpack/webpack.config.js",
+        "format": "prettier --write \"**/*.{cjs,css,html,js,jsx,mjs,json,less,scss,ts,tsx,yaml,yml}\"",
+        "typecheck": "tsc --project tsconfig.json --noEmit"
+    }
+}
