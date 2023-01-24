@@ -11,7 +11,7 @@ import { RoutePath, routes } from './routes';
 import './index.css';
 
 const App: React.FC = () => (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div />}>
         <Routes>
             {routes.map((route) => (
                 <Route
