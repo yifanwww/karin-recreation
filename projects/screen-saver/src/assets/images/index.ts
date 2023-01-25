@@ -1,4 +1,4 @@
-import { ImageInfo } from 'src/types/image';
+import { ImageProperty } from 'src/types/image';
 
 import sticker_01_1 from './sticker-01.1 [transp-1].png';
 import sticker_01_2 from './sticker-01.2 [transp-1].png';
@@ -7,74 +7,83 @@ import sticker_01_4 from './sticker-01.4 [transp-1].png';
 import sticker_02_1 from './sticker-02.1 [origin].jpg';
 import sticker_02_4 from './sticker-02.4 [origin].jpg';
 
-function createImageInfos(infos: Record<string, Omit<ImageInfo, 'name'>>): Record<string, ImageInfo> {
-    return Object.fromEntries(Object.entries(infos).map(([name, info]) => [name, { ...info, name }]));
+function createImageProperties(props: ImageProperty[]): Record<string, ImageProperty> {
+    return Object.fromEntries(props.map((prop) => [prop.name, prop]));
 }
 
-export const ImageAssets = createImageInfos({
-    sticker_01_1: {
+export enum ImageAssetName {
+    STICKER_01_1 = 'sticker_01_1',
+    STICKER_01_2 = 'sticker_01_2',
+    STICKER_01_3 = 'sticker_01_3',
+    STICKER_01_4 = 'sticker_01_4',
+    STICKER_02_1 = 'sticker_02_1',
+    STICKER_02_4 = 'sticker_02_4',
+}
+
+export const ImageAssets = createImageProperties([
+    {
+        name: ImageAssetName.STICKER_01_1,
         url: sticker_01_1,
-        size: { height: 800, width: 800 },
-        margin: {
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-        },
+
+        size: { x: 800, y: 800 },
+        innerPosition: { x: 68, y: 60 },
+        innerSize: { x: 678, y: 683 },
+
+        defaultCanvasScale: { x: 0.3, y: 0.3 },
     },
 
-    sticker_01_2: {
+    {
+        name: ImageAssetName.STICKER_01_2,
         url: sticker_01_2,
-        size: { height: 800, width: 800 },
-        margin: {
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-        },
+
+        size: { x: 800, y: 800 },
+        innerPosition: { x: 64, y: 67 },
+        innerSize: { x: 680, y: 671 },
+
+        defaultCanvasScale: { x: 0.3, y: 0.3 },
     },
 
-    sticker_01_3: {
+    {
+        name: ImageAssetName.STICKER_01_3,
         url: sticker_01_3,
-        size: { height: 800, width: 800 },
-        margin: {
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-        },
+
+        size: { x: 800, y: 800 },
+        innerPosition: { x: 45, y: 60 },
+        innerSize: { x: 711, y: 775 },
+
+        defaultCanvasScale: { x: 0.3, y: 0.3 },
     },
 
-    sticker_01_4: {
+    {
+        name: ImageAssetName.STICKER_01_4,
         url: sticker_01_4,
-        size: { height: 800, width: 800 },
-        margin: {
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-        },
+
+        size: { x: 800, y: 800 },
+        innerPosition: { x: 65, y: 54 },
+        innerSize: { x: 674, y: 690 },
+
+        defaultCanvasScale: { x: 0.3, y: 0.3 },
     },
 
-    sticker_02_1: {
+    {
+        name: ImageAssetName.STICKER_02_1,
         url: sticker_02_1,
-        size: { height: 800, width: 800 },
-        margin: {
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-        },
+
+        size: { x: 800, y: 800 },
+        innerPosition: { x: 0, y: 0 },
+        innerSize: { x: 800, y: 800 },
+
+        defaultCanvasScale: { x: 0.3, y: 0.3 },
     },
 
-    sticker_02_4: {
+    {
+        name: ImageAssetName.STICKER_02_4,
         url: sticker_02_4,
-        size: { height: 800, width: 800 },
-        margin: {
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-        },
+
+        size: { x: 800, y: 800 },
+        innerPosition: { x: 0, y: 0 },
+        innerSize: { x: 800, y: 800 },
+
+        defaultCanvasScale: { x: 0.3, y: 0.3 },
     },
-});
+]);

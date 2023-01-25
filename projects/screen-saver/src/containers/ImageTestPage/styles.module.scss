@@ -1,8 +1,10 @@
 .page {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 2fr 8fr;
+    min-height: 0;
     gap: 32px;
-    margin: 64px;
+    padding: 64px;
+    overflow: hidden;
 }
 
 .image-info-panel {
@@ -15,7 +17,4 @@
     border-radius: 5px;
 
     padding: 16px;
-}
-
-.image-container {
 }

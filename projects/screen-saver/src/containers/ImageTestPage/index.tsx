@@ -1,33 +1,34 @@
 import { useContext, useState } from 'react';
 
-import { ImageInfoEditor } from './components/ImageInfoEditor';
+import { ImagePropertyEditor } from './components/ImagePropertyEditor';
 import { ImageDisplay } from './components/ImageDisplay';
-import { ImageSelector } from './components/ImageSelector';
-import { ImageInfoContext, ImageInfoProvider } from './contexts/ImageInfoContext';
+import { ImageSelect } from './components/ImageSelect';
+import { ImagePropertyContext, ImagePropertyProvider } from './contexts/ImagePropertyContext';
 
 import css from './styles.module.scss';
 
 const ImageTestPage: React.FC = () => {
-    const { images, update } = useContext(ImageInfoContext);
+    const { changeInnerMargin, images } = useContext(ImagePropertyContext);
     const [selectedImage, setSelectedImage] = useState<string>();
 
     return (
         <div className={css.page}>
             <div className={css['image-info-panel']}>
-                <ImageSelector onChange={setSelectedImage} value={selectedImage} />
-                <ImageInfoEditor image={selectedImage ? images[selectedImage] : undefined} onChangeImage={update} />
+                <ImageSelect onChange={setSelectedImage} value={selectedImage} />
+                <ImagePropertyEditor
+                    image={selectedImage ? images[selectedImage] : undefined}
+                    onChangeImageInnerMargin={changeInnerMargin}
+                />
             </div>
-            <div className={css['image-container']}>
-                <ImageDisplay />
-            </div>
+            <ImageDisplay selectedImage={selectedImage} />
         </div>
     );
 };
 
 const WrappedImageTestPage: React.FC = () => (
-    <ImageInfoProvider>
+    <ImagePropertyProvider>
         <ImageTestPage />
-    </ImageInfoProvider>
+    </ImagePropertyProvider>
 );
 
 export default WrappedImageTestPage;
