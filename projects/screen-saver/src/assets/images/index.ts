@@ -4,8 +4,8 @@ import sticker_01_1 from './sticker-01.1 [transp-1].png';
 import sticker_01_2 from './sticker-01.2 [transp-1].png';
 import sticker_01_3 from './sticker-01.3 [transp-1].png';
 import sticker_01_4 from './sticker-01.4 [transp-1].png';
-import sticker_02_1 from './sticker-02.1 [origin].jpg';
-import sticker_02_4 from './sticker-02.4 [origin].jpg';
+import sticker_02_1 from './sticker-02.1 [transp-1].png';
+import sticker_02_4 from './sticker-02.4 [transp-1].png';
 
 function createImageProperties(props: ImageProperty[]): Record<string, ImageProperty> {
     return Object.fromEntries(props.map((prop) => [prop.name, prop]));
@@ -70,8 +70,8 @@ export const ImageAssets = createImageProperties([
         url: sticker_02_1,
 
         size: { x: 800, y: 800 },
-        innerPosition: { x: 0, y: 0 },
-        innerSize: { x: 800, y: 800 },
+        innerPosition: { x: 45, y: 62 },
+        innerSize: { x: 711, y: 694 },
 
         defaultCanvasScale: { x: 0.3, y: 0.3 },
     },
@@ -81,8 +81,8 @@ export const ImageAssets = createImageProperties([
         url: sticker_02_4,
 
         size: { x: 800, y: 800 },
-        innerPosition: { x: 0, y: 0 },
-        innerSize: { x: 800, y: 800 },
+        innerPosition: { x: 45, y: 59 },
+        innerSize: { x: 710, y: 696 },
 
         defaultCanvasScale: { x: 0.3, y: 0.3 },
     },
