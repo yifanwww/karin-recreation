@@ -28,4 +28,7 @@ export interface ImageControl {
 
     position: Vector2;
     scale: Vector2;
+
+    direction: number;
+    speed: number;
 }

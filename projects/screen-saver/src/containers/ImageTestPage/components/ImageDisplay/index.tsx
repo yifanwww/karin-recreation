@@ -14,35 +14,44 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ selectedImage }) => 
 
     const ref = useRef<HTMLCanvasElement>(null);
 
-    const getImageControls = useCallback((client: Vector2, image: ImageProperty): ImageControl[] => {
-        const { defaultCanvasScale: scale, innerPosition, innerSize, size } = image;
+    const getImageControls = useCallback(
+        (client: Vector2, image: ImageProperty): Pick<ImageControl, 'property' | 'position' | 'scale'>[] => {
+            const { defaultCanvasScale: scale, innerPosition, innerSize } = image;
 
-        return [
-            {
-                property: image,
-                position: { x: -innerPosition.x * scale.x, y: -innerPosition.y * scale.y },
-                scale,
-            },
-            {
-                property: image,
-                position: { x: client.x - (innerPosition.x + innerSize.x) * scale.x, y: -innerPosition.y * scale.y },
-                scale,
-            },
-            {
-                property: image,
-                position: { x: -innerPosition.x * scale.x, y: client.y - (innerPosition.y + innerSize.y) * scale.y },
-                scale,
-            },
-            {
-                property: image,
-                position: {
-                    x: client.x - (innerPosition.x + innerSize.x) * scale.x,
-                    y: client.y - (innerPosition.y + innerSize.y) * scale.y,
+            return [
+                {
+                    property: image,
+                    position: { x: -innerPosition.x * scale.x, y: -innerPosition.y * scale.y },
+                    scale,
                 },
-                scale,
-            },
-        ];
-    }, []);
+                {
+                    property: image,
+                    position: {
+                        x: client.x - (innerPosition.x + innerSize.x) * scale.x,
+                        y: -innerPosition.y * scale.y,
+                    },
+                    scale,
+                },
+                {
+                    property: image,
+                    position: {
+                        x: -innerPosition.x * scale.x,
+                        y: client.y - (innerPosition.y + innerSize.y) * scale.y,
+                    },
+                    scale,
+                },
+                {
+                    property: image,
+                    position: {
+                        x: client.x - (innerPosition.x + innerSize.x) * scale.x,
+                        y: client.y - (innerPosition.y + innerSize.y) * scale.y,
+                    },
+                    scale,
+                },
+            ];
+        },
+        [],
+    );
 
     const paint = useCallback(
         (canvas: HTMLCanvasElement, image: ImageProperty) => {

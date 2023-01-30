@@ -14,6 +14,6 @@ export const routes: RouteConfig[] = createRoutes([
     },
     {
         path: RoutePath.SCREEN_SAVER,
-        component: lazy(() => import(/* webpackChunkName: 'screen-saver' */ 'src/containers/ScreenSaverPage')),
+        component: lazy(() => import(/* webpackChunkName: 'screen-saver' */ 'src/containers/PreviewPage')),
     },
 ]);

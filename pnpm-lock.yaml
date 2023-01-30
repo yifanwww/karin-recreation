@@ -16,6 +16,7 @@ importers:
       '@types/react-router-dom': ^5.3.3
       '@typescript-eslint/parser': ^5.49.0
       antd: ^4.24.7
+      clsx: ^1.2.1
       eslint: ^8.32.0
       eslint-plugin-react-hooks: ^4.6.0
       immer: ^9.0.18
@@ -38,6 +39,7 @@ importers:
     dependencies:
       '@ant-design/icons': 4.8.0_sfoxds7t5ydpegc3knd667wn6m
       antd: 4.24.7_sfoxds7t5ydpegc3knd667wn6m
+      clsx: 1.2.1
       immer: 9.0.18
       lodash: 4.17.21
       react: 17.0.2
@@ -3671,6 +3673,11 @@ packages:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
     dev: true
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /co/4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}

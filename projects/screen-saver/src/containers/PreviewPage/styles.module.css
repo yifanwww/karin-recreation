@@ -1,0 +1,28 @@
+.page {
+    display: flex;
+    min-height: 0;
+}
+
+.content-container {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    padding: 64px;
+    gap: 32px;
+    min-height: 0;
+}
+
+.debug-display-container {
+    flex: none;
+    border-left: 1px solid #e0e0e0;
+}
+
+.moving-control-container {
+    flex: none;
+    height: 256px;
+}
+
+.screen-container {
+    flex: auto;
+    min-height: 0;
+}
