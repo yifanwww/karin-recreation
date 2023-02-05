@@ -16,27 +16,11 @@ export const ImagePropertyEditor: React.FC<ImagePropertyEditorProps> = ({ image,
             <Descriptions.Item label="Height">{image?.size.y ?? '--'}</Descriptions.Item>
         </Descriptions>
         <Descriptions className={css.description} column={2}>
-            <Descriptions.Item label="Top">
-                <InputNumber
-                    disabled={image === undefined}
-                    onChange={(value) => onChangeImageInnerMargin?.(image!.name, { top: value ?? 0 })}
-                    value={image?.innerPosition.y}
-                    style={{ width: '192px' }}
-                />
-            </Descriptions.Item>
-            <Descriptions.Item label="Bottom">
-                <InputNumber
-                    disabled={image === undefined}
-                    onChange={(value) => onChangeImageInnerMargin?.(image!.name, { bottom: value ?? 0 })}
-                    value={image ? image.size.y - image.innerPosition.y - image.innerSize.y : undefined}
-                    style={{ width: '192px' }}
-                />
-            </Descriptions.Item>
             <Descriptions.Item label="Left">
                 <InputNumber
                     disabled={image === undefined}
                     onChange={(value) => onChangeImageInnerMargin?.(image!.name, { left: value ?? 0 })}
-                    value={image?.innerPosition.x}
+                    value={image?.contentSize.min.x}
                     style={{ width: '192px' }}
                 />
             </Descriptions.Item>
@@ -44,7 +28,23 @@ export const ImagePropertyEditor: React.FC<ImagePropertyEditorProps> = ({ image,
                 <InputNumber
                     disabled={image === undefined}
                     onChange={(value) => onChangeImageInnerMargin?.(image!.name, { right: value ?? 0 })}
-                    value={image ? image.size.x - image.innerPosition.x - image.innerSize.x : undefined}
+                    value={image ? image.size.x - image.contentSize.max.x : undefined}
+                    style={{ width: '192px' }}
+                />
+            </Descriptions.Item>
+            <Descriptions.Item label="Top">
+                <InputNumber
+                    disabled={image === undefined}
+                    onChange={(value) => onChangeImageInnerMargin?.(image!.name, { top: value ?? 0 })}
+                    value={image?.contentSize.min.y}
+                    style={{ width: '192px' }}
+                />
+            </Descriptions.Item>
+            <Descriptions.Item label="Bottom">
+                <InputNumber
+                    disabled={image === undefined}
+                    onChange={(value) => onChangeImageInnerMargin?.(image!.name, { bottom: value ?? 0 })}
+                    value={image ? image.size.y - image.contentSize.max.y : undefined}
                     style={{ width: '192px' }}
                 />
             </Descriptions.Item>

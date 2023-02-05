@@ -1,7 +1,7 @@
 import { Vector2 } from 'js-vectors';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 
-import { ImageControl, ImageProperty } from 'src/types/image';
+import { ImageProperty } from 'src/types/image';
 import { ImagePropertyContext } from '../../contexts/ImagePropertyContext';
 
 import css from './styles.module.scss';
@@ -15,68 +15,34 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ selectedImage }) => 
 
     const ref = useRef<HTMLCanvasElement>(null);
 
-    const getImageControls = useCallback(
-        (client: Vector2, image: ImageProperty): Pick<ImageControl, 'property' | 'position' | 'scale'>[] => {
-            const { defaultCanvasScale: scale, innerPosition, innerSize } = image;
+    const getImagePositions = useCallback((client: Vector2, image: ImageProperty): Vector2[] => {
+        const { contentSize, scale } = image;
 
-            return [
-                {
-                    property: image,
-                    position: new Vector2(-innerPosition.x * scale.x, -innerPosition.y * scale.y),
-                    scale,
-                },
-                {
-                    property: image,
-                    position: new Vector2(
-                        client.x - (innerPosition.x + innerSize.x) * scale.x,
-                        -innerPosition.y * scale.y,
-                    ),
-                    scale,
-                },
-                {
-                    property: image,
-                    position: new Vector2(
-                        -innerPosition.x * scale.x,
-                        client.y - (innerPosition.y + innerSize.y) * scale.y,
-                    ),
-                    scale,
-                },
-                {
-                    property: image,
-                    position: new Vector2(
-                        client.x - (innerPosition.x + innerSize.x) * scale.x,
-                        client.y - (innerPosition.y + innerSize.y) * scale.y,
-                    ),
-                    scale,
-                },
-            ];
-        },
-        [],
-    );
+        return [
+            new Vector2(-contentSize.min.x * scale.x, -contentSize.min.y * scale.y),
+            new Vector2(client.x - contentSize.max.x * scale.x, -contentSize.min.y * scale.y),
+            new Vector2(-contentSize.min.x * scale.x, client.y - contentSize.max.y * scale.y),
+            new Vector2(client.x - contentSize.max.x * scale.x, client.y - contentSize.max.y * scale.y),
+        ];
+    }, []);
 
     const paint = useCallback(
         (canvas: HTMLCanvasElement, image: ImageProperty) => {
             const ctx = canvas.getContext('2d');
 
             if (ctx) {
-                const controls = getImageControls(new Vector2(canvas.width, canvas.height), image);
+                const positions = getImagePositions(new Vector2(canvas.width, canvas.height), image);
 
                 const img = new Image(800, 800);
                 img.src = image.url;
                 img.onload = function () {
-                    for (const control of controls) {
-                        ctx.drawImage(
-                            img,
-                            control.position.x,
-                            control.position.y,
-                            control.property.size.x * control.scale.x,
-                            control.property.size.y * control.scale.y,
-                        );
+                    for (const pos of positions) {
+                        ctx.drawImage(img, pos.x, pos.y, image.size.x * image.scale.x, image.size.y * image.scale.y);
                     }
                 };
             }
         },
-        [getImageControls],
+        [getImagePositions],
     );
 
     useEffect(() => {

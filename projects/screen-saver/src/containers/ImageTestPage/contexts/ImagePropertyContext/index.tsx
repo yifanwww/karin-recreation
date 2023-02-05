@@ -13,21 +13,17 @@ export interface ImagePropertyContextState {
 }
 
 function updateDraftImage(draft: Draft<ImageProperty>, margin: Partial<Margin>) {
-    if (margin.top !== undefined) {
-        const diff = draft.innerPosition.y - margin.top;
-        draft.innerPosition = new Vector2(draft.innerPosition.x, margin.top);
-        draft.innerSize = new Vector2(draft.innerSize.x, draft.innerSize.y + diff);
-    }
     if (margin.left !== undefined) {
-        const diff = draft.innerPosition.x - margin.left;
-        draft.innerPosition = new Vector2(margin.left, draft.innerPosition.y);
-        draft.innerSize = new Vector2(draft.innerSize.x + diff, draft.innerSize.y);
+        draft.contentSize.min = new Vector2(margin.left, draft.contentSize.min.y);
     }
-    if (margin.bottom !== undefined) {
-        draft.innerSize = new Vector2(draft.innerSize.x, draft.size.y - draft.innerPosition.y - margin.bottom);
+    if (margin.top !== undefined) {
+        draft.contentSize.min = new Vector2(draft.contentSize.min.x, margin.top);
     }
     if (margin.right !== undefined) {
-        draft.innerSize = new Vector2(draft.size.x - draft.innerPosition.x - margin.right, draft.innerSize.y);
+        draft.contentSize.max = new Vector2(draft.size.x - margin.right, draft.contentSize.max.y);
+    }
+    if (margin.bottom !== undefined) {
+        draft.contentSize.max = new Vector2(draft.contentSize.max.x, draft.size.y - margin.bottom);
     }
 }
 
