@@ -1,3 +1,4 @@
+import { Vector2 } from 'js-vectors';
 import { ReadonlyDeep } from 'type-fest';
 
 export interface Margin {
@@ -5,11 +6,6 @@ export interface Margin {
     right: number;
     bottom: number;
     left: number;
-}
-
-export interface Vector2 {
-    x: number;
-    y: number;
 }
 
 export interface ImageProperty {

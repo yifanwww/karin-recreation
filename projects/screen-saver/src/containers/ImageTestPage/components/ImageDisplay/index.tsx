@@ -1,6 +1,7 @@
+import { Vector2 } from 'js-vectors';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 
-import { ImageControl, ImageProperty, Vector2 } from 'src/types/image';
+import { ImageControl, ImageProperty } from 'src/types/image';
 import { ImagePropertyContext } from '../../contexts/ImagePropertyContext';
 
 import css from './styles.module.scss';
@@ -21,31 +22,31 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ selectedImage }) => 
             return [
                 {
                     property: image,
-                    position: { x: -innerPosition.x * scale.x, y: -innerPosition.y * scale.y },
+                    position: new Vector2(-innerPosition.x * scale.x, -innerPosition.y * scale.y),
                     scale,
                 },
                 {
                     property: image,
-                    position: {
-                        x: client.x - (innerPosition.x + innerSize.x) * scale.x,
-                        y: -innerPosition.y * scale.y,
-                    },
+                    position: new Vector2(
+                        client.x - (innerPosition.x + innerSize.x) * scale.x,
+                        -innerPosition.y * scale.y,
+                    ),
                     scale,
                 },
                 {
                     property: image,
-                    position: {
-                        x: -innerPosition.x * scale.x,
-                        y: client.y - (innerPosition.y + innerSize.y) * scale.y,
-                    },
+                    position: new Vector2(
+                        -innerPosition.x * scale.x,
+                        client.y - (innerPosition.y + innerSize.y) * scale.y,
+                    ),
                     scale,
                 },
                 {
                     property: image,
-                    position: {
-                        x: client.x - (innerPosition.x + innerSize.x) * scale.x,
-                        y: client.y - (innerPosition.y + innerSize.y) * scale.y,
-                    },
+                    position: new Vector2(
+                        client.x - (innerPosition.x + innerSize.x) * scale.x,
+                        client.y - (innerPosition.y + innerSize.y) * scale.y,
+                    ),
                     scale,
                 },
             ];
@@ -58,7 +59,7 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ selectedImage }) => 
             const ctx = canvas.getContext('2d');
 
             if (ctx) {
-                const controls = getImageControls({ x: canvas.width, y: canvas.height }, image);
+                const controls = getImageControls(new Vector2(canvas.width, canvas.height), image);
 
                 const img = new Image(800, 800);
                 img.src = image.url;
