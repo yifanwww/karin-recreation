@@ -1,6 +1,7 @@
 import { DebugStepDisplay } from './components/DebugStepDisplay';
 import { MovingControl } from './components/MovingControl';
 import { ScreenView } from './components/ScreenView';
+import { PreviewControlProvider } from './contexts/PreviewControlContext';
 
 import css from './styles.module.css';
 
@@ -22,4 +23,10 @@ const ScreenSaverPage: React.FC = () => {
     );
 };
 
-export default ScreenSaverPage;
+const WrappedScreenSaverPage: React.FC = () => (
+    <PreviewControlProvider>
+        <ScreenSaverPage />
+    </PreviewControlProvider>
+);
+
+export default WrappedScreenSaverPage;

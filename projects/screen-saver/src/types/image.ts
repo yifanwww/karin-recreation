@@ -1,5 +1,7 @@
 import { Vector2 } from 'js-vectors';
 
+import { Range } from './misc';
+
 export interface Margin {
     top: number;
     right: number;
@@ -18,10 +20,7 @@ export interface ImageProperty {
     /**
      * Image content size.
      */
-    contentSize: {
-        min: Vector2;
-        max: Vector2;
-    };
+    contentSize: Range<Vector2>;
 
     scale: Vector2;
 }
