@@ -20,6 +20,7 @@ importers:
       eslint: ^8.32.0
       eslint-plugin-react-hooks: ^4.6.0
       immer: ^9.0.18
+      js-vectors: ^1.0.1
       lodash: ^4.17.21
       prettier: 2.8.0
       react: ^17.0.2
@@ -41,6 +42,7 @@ importers:
       antd: 4.24.7_sfoxds7t5ydpegc3knd667wn6m
       clsx: 1.2.1
       immer: 9.0.18
+      js-vectors: 1.0.1
       lodash: 4.17.21
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -70,6 +72,9 @@ importers:
       typescript: 4.9.4
       typescript-plugin-css-modules: 4.1.1_typescript@4.9.4
       webpack: 5.75.0
+
+  projects/screen-saver:
+    specifiers: {}
 
 packages:
 
@@ -6683,6 +6688,11 @@ packages:
 
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+
+  /js-vectors/1.0.1:
+    resolution: {integrity: sha512-+/05aXkdmHYcjO0MvpB0ApyulHsLyEuBTH59CAFCEhy1U8zHiLIjOK5P0/ZLIXWH9OUD4sohxdkEH07hwnFuxQ==}
+    engines: {node: '>=10.0.0'}
+    dev: false
 
   /js-yaml/3.14.1:
     resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==}
