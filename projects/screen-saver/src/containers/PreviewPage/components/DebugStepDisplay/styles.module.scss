@@ -1,0 +1,14 @@
+.list {
+    width: 256px;
+}
+
+.item-container {
+    flex-direction: column;
+    padding: 12px 12px;
+    align-items: start;
+}
+
+.num {
+    position: absolute;
+    right: 12px;
+}
