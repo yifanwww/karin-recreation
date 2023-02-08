@@ -5,9 +5,9 @@ import { useImmerReducer } from 'use-immer';
 import { calculateSteps, stepConfigs, triggerConfigs } from 'src/modules/control';
 import { abstractFn } from 'src/utils/function';
 import { reducer } from './reducer';
-import { PreviewControlContextState, PreviewControlContextUpdaters } from './types';
+import { PreviewControlContextValues, PreviewControlContextUpdaters } from './types';
 
-const initialState: PreviewControlContextState = {
+const initialState: PreviewControlContextValues = {
     // data
 
     current: 0,
@@ -32,7 +32,7 @@ const initialState: PreviewControlContextState = {
     changeTime: abstractFn,
 };
 
-export const PreviewControlContext = createContext<PreviewControlContextState>(initialState);
+export const PreviewControlContext = createContext<PreviewControlContextValues>(initialState);
 
 export const PreviewControlProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useImmerReducer(reducer, {
@@ -63,7 +63,7 @@ export const PreviewControlProvider: React.FC = ({ children }) => {
     );
 
     const context = useMemo(
-        (): PreviewControlContextState => ({
+        (): PreviewControlContextValues => ({
             ...state,
             ...updaters,
             screen,

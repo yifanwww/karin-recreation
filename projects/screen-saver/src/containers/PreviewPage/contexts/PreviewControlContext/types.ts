@@ -7,7 +7,7 @@ export type PreviewControlContextUpdaters = {
     changeTime: (time: Millisecond) => void;
 };
 
-export type PreviewControlContextData = {
+export type PreviewControlContextState = {
     current: Millisecond;
 
     initial: {
@@ -23,6 +23,6 @@ export type PreviewControlContextExtraData = {
     steps: StepRecord[];
 };
 
-export type PreviewControlContextState = PreviewControlContextData &
+export type PreviewControlContextValues = PreviewControlContextState &
     PreviewControlContextExtraData &
     PreviewControlContextUpdaters;

@@ -7,7 +7,7 @@ import { ImageAssets } from 'src/assets';
 import { Margin, ImageProperty } from 'src/types/image';
 import { abstractFn } from 'src/utils/function';
 
-export interface ImagePropertyContextState {
+export interface ImagePropertyContextValues {
     changeInnerMargin: (name: string, margin: Partial<Margin>) => void;
     images: Record<string, ImageProperty>;
 }
@@ -29,7 +29,7 @@ function updateDraftImage(draft: Draft<ImageProperty>, margin: Partial<Margin>) 
 
 type ReducerAction = { type: 'update'; name: string; margin: Partial<Margin> };
 
-const reducer: ImmerReducer<Pick<ImagePropertyContextState, 'images'>, ReducerAction> = (draftState, action) => {
+const reducer: ImmerReducer<Pick<ImagePropertyContextValues, 'images'>, ReducerAction> = (draftState, action) => {
     let never: never;
     switch (action.type) {
         case 'update':
@@ -41,7 +41,7 @@ const reducer: ImmerReducer<Pick<ImagePropertyContextState, 'images'>, ReducerAc
     }
 };
 
-export const ImagePropertyContext = createContext<ImagePropertyContextState>({
+export const ImagePropertyContext = createContext<ImagePropertyContextValues>({
     changeInnerMargin: abstractFn,
     images: ImageAssets,
 });
@@ -49,7 +49,7 @@ export const ImagePropertyContext = createContext<ImagePropertyContextState>({
 export const ImagePropertyProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useImmerReducer(reducer, { images: ImageAssets });
 
-    const changeInnerMargin = useCallback<ImagePropertyContextState['changeInnerMargin']>(
+    const changeInnerMargin = useCallback<ImagePropertyContextValues['changeInnerMargin']>(
         (name, margin) => dispatch({ type: 'update', name, margin }),
         [dispatch],
     );
