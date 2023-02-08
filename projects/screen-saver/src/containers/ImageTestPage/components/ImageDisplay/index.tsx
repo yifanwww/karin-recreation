@@ -1,10 +1,35 @@
 import { Vector2 } from 'js-vectors';
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
 import { ImageProperty } from 'src/types/image';
+import { createImageElement } from 'src/utils/image';
 import { ImagePropertyContext } from '../../contexts/ImagePropertyContext';
 
 import css from './styles.module.scss';
+
+function getImagePositions(client: Vector2, image: ImageProperty): Vector2[] {
+    const { contentSize, scale } = image;
+
+    return [
+        new Vector2(-contentSize.min.x * scale.x, -contentSize.min.y * scale.y),
+        new Vector2(client.x - contentSize.max.x * scale.x, -contentSize.min.y * scale.y),
+        new Vector2(-contentSize.min.x * scale.x, client.y - contentSize.max.y * scale.y),
+        new Vector2(client.x - contentSize.max.x * scale.x, client.y - contentSize.max.y * scale.y),
+    ];
+}
+
+async function paint(canvas: HTMLCanvasElement, image: ImageProperty) {
+    const ctx = canvas.getContext('2d');
+
+    if (ctx) {
+        const positions = getImagePositions(new Vector2(canvas.width, canvas.height), image);
+        const img = await createImageElement(image);
+
+        for (const pos of positions) {
+            ctx.drawImage(img, pos.x, pos.y, image.size.x * image.scale.x, image.size.y * image.scale.y);
+        }
+    }
+}
 
 export interface ImageDisplayProps {
     selectedImage: string | undefined;
@@ -14,36 +39,6 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ selectedImage }) => 
     const { images } = useContext(ImagePropertyContext);
 
     const ref = useRef<HTMLCanvasElement>(null);
-
-    const getImagePositions = useCallback((client: Vector2, image: ImageProperty): Vector2[] => {
-        const { contentSize, scale } = image;
-
-        return [
-            new Vector2(-contentSize.min.x * scale.x, -contentSize.min.y * scale.y),
-            new Vector2(client.x - contentSize.max.x * scale.x, -contentSize.min.y * scale.y),
-            new Vector2(-contentSize.min.x * scale.x, client.y - contentSize.max.y * scale.y),
-            new Vector2(client.x - contentSize.max.x * scale.x, client.y - contentSize.max.y * scale.y),
-        ];
-    }, []);
-
-    const paint = useCallback(
-        (canvas: HTMLCanvasElement, image: ImageProperty) => {
-            const ctx = canvas.getContext('2d');
-
-            if (ctx) {
-                const positions = getImagePositions(new Vector2(canvas.width, canvas.height), image);
-
-                const img = new Image(800, 800);
-                img.src = image.url;
-                img.onload = function () {
-                    for (const pos of positions) {
-                        ctx.drawImage(img, pos.x, pos.y, image.size.x * image.scale.x, image.size.y * image.scale.y);
-                    }
-                };
-            }
-        },
-        [getImagePositions],
-    );
 
     useEffect(() => {
         const canvas = ref.current;
@@ -66,7 +61,7 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ selectedImage }) => 
         return () => {
             observer.disconnect();
         };
-    }, [images, paint, selectedImage]);
+    }, [images, selectedImage]);
 
     return (
         <div className={css['canvas-container']}>

@@ -8,18 +8,18 @@ export type StepCommonOption = {
 };
 
 export type StepOption = StepCommonOption & {
-    image: ImageAssetName;
+    imageName: ImageAssetName;
 };
 
 export type StepTriggerOption = StepCommonOption & {
-    image: ImageAssetName;
+    imageName: ImageAssetName;
     duration: Millisecond;
 };
 
 export type StepRecord = {
     time: Millisecond;
 
-    image: ImageAssetName;
+    imageName: ImageAssetName;
     position: Vector2;
     direction: Vector2;
 };

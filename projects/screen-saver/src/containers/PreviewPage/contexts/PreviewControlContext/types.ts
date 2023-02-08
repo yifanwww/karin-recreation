@@ -21,7 +21,6 @@ export type PreviewControlContextData = {
 export type PreviewControlContextExtraData = {
     screen: Vector2;
     steps: StepRecord[];
-    currentStep: number;
 };
 
 export type PreviewControlContextState = PreviewControlContextData &

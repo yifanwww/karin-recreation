@@ -33,14 +33,14 @@ export function calculateSteps(options: Options): StepRecord[] {
     const steps: StepRecord[] = [
         {
             time: currTime,
-            image: currDefault.image,
+            imageName: currDefault.imageName,
             position: currPosition.clone(),
             direction: currDirection.clone(),
         },
     ];
 
     const getAvaliablePosition = (): Range<Vector2> => {
-        const image = ImageAssets[currDefault.image];
+        const image = ImageAssets[currDefault.imageName];
         return {
             min: image.contentSize.min.clone(),
             max: Vector2.sub(screen, Vector2.mul(image.size, image.scale)),
@@ -80,7 +80,7 @@ export function calculateSteps(options: Options): StepRecord[] {
 
         return {
             time: currTime,
-            image: currDefault.image,
+            imageName: currDefault.imageName,
             position: currPosition.clone(),
             direction: currDirection.clone(),
         };

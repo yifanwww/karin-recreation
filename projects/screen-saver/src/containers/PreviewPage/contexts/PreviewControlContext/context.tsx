@@ -26,7 +26,6 @@ const initialState: PreviewControlContextState = {
 
     screen: new Vector2(1920, 1080),
     steps: [],
-    currentStep: -1,
 
     // actions
 
@@ -69,7 +68,6 @@ export const PreviewControlProvider: React.FC = ({ children }) => {
             ...updaters,
             screen,
             steps,
-            currentStep: steps.findIndex((item) => item.time <= state.current),
         }),
         [screen, state, steps, updaters],
     );
