@@ -13,7 +13,7 @@ export const routes: RouteConfig[] = createRoutes([
         component: lazy(() => import(/* webpackChunkName: 'image-test' */ 'src/containers/ImageTestPage')),
     },
     {
-        path: RoutePath.SCREEN_SAVER,
-        component: lazy(() => import(/* webpackChunkName: 'screen-saver' */ 'src/containers/PreviewPage')),
+        path: RoutePath.PREVIEW,
+        component: lazy(() => import(/* webpackChunkName: 'preview' */ 'src/containers/PreviewPage')),
     },
 ]);

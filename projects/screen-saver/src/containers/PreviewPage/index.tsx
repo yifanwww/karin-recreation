@@ -5,28 +5,26 @@ import { PreviewControlProvider } from './contexts/PreviewControlContext';
 
 import css from './styles.module.css';
 
-const ScreenSaverPage: React.FC = () => {
-    return (
-        <div className={css.page}>
-            <div className={css['content-container']}>
-                <div className={css['screen-container']}>
-                    <ScreenView />
-                </div>
-                <div className={css['record-container']}>
-                    <RecordDisplay />
-                </div>
+const PreviewPage: React.FC = () => (
+    <div className={css.page}>
+        <div className={css['content-container']}>
+            <div className={css['screen-container']}>
+                <ScreenView />
             </div>
-            <div className={css['step-display-container']}>
-                <StepDisplay />
+            <div className={css['record-container']}>
+                <RecordDisplay />
             </div>
         </div>
-    );
-};
+        <div className={css['step-display-container']}>
+            <StepDisplay />
+        </div>
+    </div>
+);
 
-const WrappedScreenSaverPage: React.FC = () => (
+const WrappedPreviewPage: React.FC = () => (
     <PreviewControlProvider>
-        <ScreenSaverPage />
+        <PreviewPage />
     </PreviewControlProvider>
 );
 
-export default WrappedScreenSaverPage;
+export default WrappedPreviewPage;

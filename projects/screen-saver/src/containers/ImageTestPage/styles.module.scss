@@ -2,9 +2,11 @@
     display: grid;
     grid-template-rows: 2fr 8fr;
     min-height: 0;
+    height: 100%;
     gap: 32px;
     padding: 64px;
     overflow: hidden;
+    background: #fff;
 }
 
 .image-info-panel {
