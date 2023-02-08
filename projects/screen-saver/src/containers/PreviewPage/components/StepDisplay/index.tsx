@@ -8,9 +8,7 @@ import { PreviewControlContext } from '../../contexts/PreviewControlContext';
 
 import css from './styles.module.scss';
 
-export interface DebugStepDisplayProps {}
-
-export const DebugStepDisplay: React.FC<DebugStepDisplayProps> = () => {
+export const StepDisplay: React.FC = () => {
     const { currentStep, steps } = useContext(PreviewControlContext);
 
     const renderItem = (item: StepRecord, index: number) => (
