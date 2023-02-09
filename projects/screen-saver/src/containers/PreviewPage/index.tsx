@@ -1,6 +1,6 @@
-import { StepDisplay } from './components/StepDisplay';
-import { RecordDisplay } from './components/RecordDisplay';
+import { ControlPanel } from './components/ControlPanel';
 import { ScreenView } from './components/ScreenView';
+import { StepDisplay } from './components/StepDisplay';
 import { PreviewControlProvider } from './contexts/PreviewControlContext';
 
 import css from './styles.module.css';
@@ -11,9 +11,7 @@ const PreviewPage: React.FC = () => (
             <div className={css['screen-container']}>
                 <ScreenView />
             </div>
-            <div className={css['record-container']}>
-                <RecordDisplay />
-            </div>
+            <ControlPanel className={css['control-container']} />
         </div>
         <div className={css['step-display-container']}>
             <StepDisplay />

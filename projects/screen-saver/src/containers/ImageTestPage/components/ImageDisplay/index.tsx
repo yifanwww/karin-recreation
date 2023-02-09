@@ -1,6 +1,7 @@
 import { Vector2 } from 'js-vectors';
 import { useContext, useEffect, useRef } from 'react';
 
+import { SCREEN_SIZE } from 'src/constants/preview';
 import { ImageProperty } from 'src/types/image';
 import { createImageElement } from 'src/utils/image';
 import { ImagePropertyContext } from '../../contexts/ImagePropertyContext';
@@ -65,7 +66,7 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ selectedImage }) => 
 
     return (
         <div className={css['canvas-container']}>
-            <canvas ref={ref} className={css.canvas} width={1920} height={1080} />
+            <canvas ref={ref} className={css.canvas} width={SCREEN_SIZE.x} height={SCREEN_SIZE.y} />
         </div>
     );
 };

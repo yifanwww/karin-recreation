@@ -3,12 +3,8 @@ import { Vector2 } from 'js-vectors';
 import { StepConfigs, StepRecord } from 'src/modules/control';
 import { Millisecond } from 'src/types/primitives';
 
-export type PreviewControlContextUpdaters = {
-    changeTime: (time: Millisecond) => void;
-};
-
 export type PreviewControlContextState = {
-    current: Millisecond;
+    currentFrame: number;
 
     initial: {
         direction: Vector2;
@@ -19,8 +15,17 @@ export type PreviewControlContextState = {
 };
 
 export type PreviewControlContextExtraData = {
-    screen: Vector2;
+    currentTime: Millisecond;
+
     steps: StepRecord[];
+};
+
+export type PreviewControlContextUpdaters = {
+    changeFrame: (frame: number) => void;
+    nextFrame: (num?: number) => void;
+    prevFrame: (num?: number) => void;
+    toFirstFrame: () => void;
+    toLastFrame: () => void;
 };
 
 export type PreviewControlContextValues = PreviewControlContextState &

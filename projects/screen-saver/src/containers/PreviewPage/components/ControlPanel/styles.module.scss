@@ -1,0 +1,25 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px;
+}
+
+.control-bar {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+}
+
+.time {
+    display: flex;
+    gap: 8px;
+}
+
+.info-panel {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+}

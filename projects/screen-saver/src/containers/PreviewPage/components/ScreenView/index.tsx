@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useEffect, useRef } from 'react';
 
 import { ImageAssets } from 'src/assets';
+import { SCREEN_SIZE } from 'src/constants/preview';
 import { StepRecord } from 'src/modules/control';
 import { createImageElement } from 'src/utils/image';
 import { useCurrentStep } from '../../contexts/PreviewControlContext';
@@ -34,20 +35,6 @@ export const ScreenView: React.FC<ScreenViewProps> = ({ className }) => {
         if (canvas && step) {
             paint(canvas, step);
         }
-
-        // const observer = new ResizeObserver(() => {
-        //     if (canvas) {
-        //         paint(canvas);
-        //     }
-        // });
-
-        // if (canvas) {
-        //     observer.observe(canvas);
-        // }
-
-        // return () => {
-        //     observer.disconnect();
-        // };
     }, [step]);
 
     return (
@@ -56,7 +43,7 @@ export const ScreenView: React.FC<ScreenViewProps> = ({ className }) => {
                 <div />
             </div>
             <div className={css['canvas-container']}>
-                <canvas ref={ref} className={css.canvas} height={1080} width={1920} />
+                <canvas ref={ref} className={css.canvas} height={SCREEN_SIZE.y} width={SCREEN_SIZE.x} />
             </div>
         </div>
     );

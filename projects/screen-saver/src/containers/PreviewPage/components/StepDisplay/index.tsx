@@ -20,7 +20,7 @@ export const StepDisplay: React.FC = () => {
             </div>
             <Descriptions column={1} size="small">
                 <Descriptions.Item label="time">
-                    <code>{item.time.toFixed(2)}</code>
+                    <code>{item.time.toFixed(2)} ms</code>
                 </Descriptions.Item>
                 <Descriptions.Item label="image">
                     <code>{item.imageName}</code>
