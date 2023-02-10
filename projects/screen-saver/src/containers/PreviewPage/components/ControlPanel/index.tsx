@@ -9,11 +9,10 @@ import {
 import { Button, Spin } from 'antd';
 import clsx from 'clsx';
 import { Vector2 } from 'js-vectors';
-import { useContext } from 'react';
 
 import { Vector2View } from 'src/components/Vector2View';
 import { formatFrame } from 'src/utils/time';
-import { PreviewControlContext, useControlOperations, useCurrentStep } from '../../contexts/PreviewControlContext';
+import { useControlOperations, useCurrentStep, useNextStep } from '../../contexts/PreviewControlContext';
 
 import css from './styles.module.scss';
 
@@ -22,9 +21,16 @@ export interface ControlPanelProps {
 }
 
 export const ControlPanel: React.FC<ControlPanelProps> = ({ className }) => {
-    const { currentFrame, currentTime } = useContext(PreviewControlContext);
-    const { step } = useCurrentStep();
+    const { frame, position, step, time } = useCurrentStep();
+    const { nextStep } = useNextStep();
     const { nextFrame, prevFrame, toFirstFrame, toLastFrame } = useControlOperations();
+
+    const renderData = (label: string, value: React.ReactNode) => (
+        <div>
+            <span>{label}: &nbsp;</span>
+            {value}
+        </div>
+    );
 
     return (
         <div className={clsx(css.layout, className)}>
@@ -33,26 +39,23 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ className }) => {
                 <Button icon={<DoubleLeftOutlined />} onClick={() => prevFrame(15)} />
                 <Button icon={<LeftOutlined />} onClick={() => prevFrame()} />
                 <div className={css.time}>
-                    <code>{currentFrame}</code>/<code>{formatFrame(currentFrame)}</code>/
-                    <code>{currentTime.toFixed(2)} ms</code>
+                    <code>{frame}</code>/<code>{formatFrame(frame)}</code>/<code>{time.toFixed(2)} ms</code>
                 </div>
                 <Button icon={<RightOutlined />} onClick={() => nextFrame()} />
                 <Button icon={<DoubleRightOutlined />} onClick={() => nextFrame(15)} />
                 <Button icon={<VerticalLeftOutlined />} onClick={toLastFrame} />
             </div>
             <Spin spinning={step === null}>
+                <div className={css['info-panel']}>{renderData('image', <code>{step?.imageName}</code>)}</div>
                 <div className={css['info-panel']}>
                     <div>
-                        <span>image: &nbsp;</span>
-                        <code>{step?.imageName}</code>
+                        {renderData('position', <Vector2View vector={position ?? Vector2.ZERO} />)}
+                        {renderData('from position', <Vector2View vector={step?.position ?? Vector2.ZERO} />)}
+                        {renderData('to position', <Vector2View vector={nextStep?.position ?? Vector2.ZERO} />)}
                     </div>
                     <div>
-                        <span>position: &nbsp;</span>
-                        <Vector2View vector={step?.position ?? Vector2.ZERO} />
-                    </div>
-                    <div>
-                        <span>direction: &nbsp;</span>
-                        <Vector2View vector={step?.direction ?? Vector2.ZERO} />
+                        {renderData('direction', <Vector2View vector={step?.direction ?? Vector2.ZERO} />)}
+                        {renderData('speed', <code>{(step?.direction ?? Vector2.ZERO).length().toFixed(2)}</code>)}
                     </div>
                 </div>
             </Spin>

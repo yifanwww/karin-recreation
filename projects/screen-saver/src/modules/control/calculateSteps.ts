@@ -5,10 +5,6 @@ import { Range } from 'src/types/misc';
 import { Millisecond } from 'src/types/primitives';
 import { StepCommonOption, StepConfigs, StepRecord } from './types';
 
-function findCurrentStepConfig<T extends StepCommonOption>(time: Millisecond, configs: T[]): T {
-    return configs.find((item) => item.time <= time)!;
-}
-
 type Options = {
     configs: StepConfigs;
     initial: {
@@ -19,7 +15,11 @@ type Options = {
     screen: Vector2;
 };
 
-export function calculateSteps(options: Options): StepRecord[] {
+function findCurrentStepConfig<T extends StepCommonOption>(time: Millisecond, configs: T[]): T {
+    return configs.find((item) => item.time <= time)!;
+}
+
+function calculateRawSteps(options: Options): StepRecord[] {
     const { configs, initial, maxSteps, screen } = options;
 
     let currTime: Millisecond = 0;
@@ -42,7 +42,7 @@ export function calculateSteps(options: Options): StepRecord[] {
     const getAvaliablePosition = (): Range<Vector2> => {
         const image = ImageAssets[currDefault.imageName];
         return {
-            min: image.contentSize.min.clone(),
+            min: image.contentSize.min.clone().mul(image.scale).neg(),
             max: Vector2.sub(screen, Vector2.mul(image.size, image.scale)),
         };
     };
@@ -89,6 +89,21 @@ export function calculateSteps(options: Options): StepRecord[] {
     for (let i = 1; i < maxSteps; i++) {
         steps.push(getNextStep());
     }
+
+    return steps;
+}
+
+function normalizeStep(step: StepRecord): StepRecord {
+    return step;
+}
+
+function normalizeSteps(rawSteps: StepRecord[]): StepRecord[] {
+    return rawSteps;
+}
+
+export function calculateSteps(options: Options): StepRecord[] {
+    const rawSteps = calculateRawSteps(options);
+    const steps = normalizeSteps(rawSteps);
 
     return steps;
 }

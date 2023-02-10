@@ -2,12 +2,21 @@ import { useContext } from 'react';
 import { PreviewControlContext } from './context';
 
 export function useCurrentStep() {
-    const { currentTime, steps } = useContext(PreviewControlContext);
-    const stepIndex = steps.findIndex((item) => item.time <= currentTime);
+    const { currentDirection, currentFrame, currentPosition, currentStep, currentStepIndex, currentTime } =
+        useContext(PreviewControlContext);
     return {
-        step: stepIndex === -1 ? null : steps[stepIndex],
-        stepIndex,
+        direction: currentDirection,
+        frame: currentFrame,
+        position: currentPosition,
+        step: currentStep,
+        stepIndex: currentStepIndex,
+        time: currentTime,
     };
+}
+
+export function useNextStep() {
+    const { nextStep } = useContext(PreviewControlContext);
+    return { nextStep };
 }
 
 export function useControlOperations() {

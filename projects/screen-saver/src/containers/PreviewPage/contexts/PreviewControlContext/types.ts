@@ -16,8 +16,13 @@ export type PreviewControlContextState = {
 
 export type PreviewControlContextExtraData = {
     currentTime: Millisecond;
+    currentDirection: Vector2 | null;
+    currentPosition: Vector2 | null;
 
     steps: StepRecord[];
+    currentStep: StepRecord | null;
+    currentStepIndex: number;
+    nextStep: StepRecord | null;
 };
 
 export type PreviewControlContextUpdaters = {
