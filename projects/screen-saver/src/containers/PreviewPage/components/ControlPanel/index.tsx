@@ -1,18 +1,26 @@
 import {
+    CaretRightOutlined,
     DoubleLeftOutlined,
     DoubleRightOutlined,
     LeftOutlined,
+    PauseOutlined,
     RightOutlined,
     VerticalLeftOutlined,
     VerticalRightOutlined,
 } from '@ant-design/icons';
-import { Button, Spin } from 'antd';
+import { Button, Spin, Tooltip } from 'antd';
 import clsx from 'clsx';
 import { Vector2 } from 'js-vectors';
+import { useContext } from 'react';
 
 import { Vector2View } from 'src/components/Vector2View';
 import { formatFrame } from 'src/utils/time';
-import { useControlOperations, useCurrentStep, useNextStep } from '../../contexts/PreviewControlContext';
+import {
+    PreviewControlContext,
+    useControlOperations,
+    useCurrentStep,
+    useNextStep,
+} from '../../contexts/PreviewControlContext';
 
 import css from './styles.module.scss';
 
@@ -21,9 +29,10 @@ export interface ControlPanelProps {
 }
 
 export const ControlPanel: React.FC<ControlPanelProps> = ({ className }) => {
+    const { play } = useContext(PreviewControlContext);
     const { frame, position, step, time } = useCurrentStep();
     const { nextStep } = useNextStep();
-    const { nextFrame, prevFrame, toFirstFrame, toLastFrame } = useControlOperations();
+    const { changePlay, nextFrame, prevFrame, toFirstFrame, toLastFrame } = useControlOperations();
 
     const renderData = (label: string, value: React.ReactNode) => (
         <div>
@@ -35,15 +44,35 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ className }) => {
     return (
         <div className={clsx(css.layout, className)}>
             <div className={css['control-bar']}>
-                <Button icon={<VerticalRightOutlined />} onClick={toFirstFrame} />
-                <Button icon={<DoubleLeftOutlined />} onClick={() => prevFrame(15)} />
-                <Button icon={<LeftOutlined />} onClick={() => prevFrame()} />
                 <div className={css.time}>
                     <code>{frame}</code>/<code>{formatFrame(frame)}</code>/<code>{time.toFixed(2)} ms</code>
                 </div>
-                <Button icon={<RightOutlined />} onClick={() => nextFrame()} />
-                <Button icon={<DoubleRightOutlined />} onClick={() => nextFrame(15)} />
-                <Button icon={<VerticalLeftOutlined />} onClick={toLastFrame} />
+                <div className={css.buttons}>
+                    <Tooltip title="jump to the first frame">
+                        <Button icon={<VerticalRightOutlined />} onClick={toFirstFrame} />
+                    </Tooltip>
+                    <Tooltip title="jump to the previous 15 frame">
+                        <Button icon={<DoubleLeftOutlined />} onClick={() => prevFrame(15)} />
+                    </Tooltip>
+                    <Tooltip title="jump to the previous frame">
+                        <Button icon={<LeftOutlined />} onClick={() => prevFrame()} />
+                    </Tooltip>
+                    <Tooltip title={play ? 'stop' : 'start'}>
+                        <Button
+                            icon={play ? <PauseOutlined /> : <CaretRightOutlined />}
+                            onClick={() => changePlay(!play)}
+                        />
+                    </Tooltip>
+                    <Tooltip title="jump to the next frame">
+                        <Button icon={<RightOutlined />} onClick={() => nextFrame()} />
+                    </Tooltip>
+                    <Tooltip title="jump to the next 15 frame">
+                        <Button icon={<DoubleRightOutlined />} onClick={() => nextFrame(15)} />
+                    </Tooltip>
+                    <Tooltip title="jump to the last frame">
+                        <Button icon={<VerticalLeftOutlined />} onClick={toLastFrame} />
+                    </Tooltip>
+                </div>
             </div>
             <Spin spinning={step === null}>
                 <div className={css['info-panel']}>{renderData('image', <code>{step?.imageName}</code>)}</div>

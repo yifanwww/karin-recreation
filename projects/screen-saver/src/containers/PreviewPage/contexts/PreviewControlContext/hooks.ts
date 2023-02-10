@@ -20,6 +20,7 @@ export function useNextStep() {
 }
 
 export function useControlOperations() {
-    const { changeFrame, nextFrame, prevFrame, toFirstFrame, toLastFrame } = useContext(PreviewControlContext);
-    return { changeFrame, nextFrame, prevFrame, toFirstFrame, toLastFrame };
+    const { changeFrame, changePlay, nextFrame, prevFrame, toFirstFrame, toLastFrame } =
+        useContext(PreviewControlContext);
+    return { changeFrame, changePlay, nextFrame, prevFrame, toFirstFrame, toLastFrame };
 }

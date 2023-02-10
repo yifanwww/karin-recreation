@@ -7,9 +7,14 @@
 
 .control-bar {
     display: flex;
-    gap: 32px;
+    flex-direction: column;
+    gap: 8px;
     align-items: center;
-    justify-content: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 16px;
 }
 
 .time {
