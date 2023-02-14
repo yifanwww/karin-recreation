@@ -1,9 +1,10 @@
 import { Vector2 } from 'js-vectors';
 
-import { ImageAssets } from 'src/assets';
+import { ImageAssetName, ImageAssets } from 'src/assets';
 import { FRAME_PERIOD } from 'src/constants/preview';
 import { Range } from 'src/types/misc';
 import { Millisecond } from 'src/types/primitives';
+import { getNearestFrameTime } from 'src/utils/preview';
 import { StepCommonOption, StepConfigs, StepRecord } from './types';
 
 type Options = {
@@ -15,6 +16,14 @@ type Options = {
     maxFrame: number;
     screen: Vector2;
 };
+
+function calculateAvaliableArea(screen: Vector2, name: ImageAssetName): Range<Vector2> {
+    const image = ImageAssets[name];
+    return {
+        min: image.contentSize.min.clone().mul(image.scale).neg(),
+        max: Vector2.sub(screen, Vector2.mul(image.contentSize.max, image.scale)),
+    };
+}
 
 function findCurrentStepConfig<T extends StepCommonOption>(time: Millisecond, configs: T[]): T {
     return configs.find((item) => item.time <= time)!;
@@ -42,16 +51,14 @@ function calculateRawSteps(options: Options): StepRecord[] {
         },
     ];
 
-    const calculateAvaliablePosition = (): Range<Vector2> => {
-        const image = ImageAssets[currDefault.imageName];
-        return {
-            min: image.contentSize.min.clone().mul(image.scale).neg(),
-            max: Vector2.sub(screen, Vector2.mul(image.size, image.scale)),
-        };
-    };
+    const avaliableAreas = Object.fromEntries(
+        Object.values(ImageAssetName).map((name) => [name, calculateAvaliableArea(screen, name)]),
+    ) as Record<ImageAssetName, Range<Vector2>>;
+
+    console.log(avaliableAreas);
 
     const calculateNextStep = (): StepRecord => {
-        const { max, min } = calculateAvaliablePosition();
+        const { max, min } = avaliableAreas[currDefault.imageName];
 
         const durationX =
             currDirection.x > 0 ? (max.x - currPosition.x) / currDirection.x : currPosition.x / -currDirection.x;
@@ -113,11 +120,14 @@ function calculateRawSteps(options: Options): StepRecord[] {
 }
 
 function normalizeStep(step: StepRecord): StepRecord {
-    return step;
+    return {
+        ...step,
+        time: getNearestFrameTime(step.time),
+    };
 }
 
 function normalizeSteps(rawSteps: StepRecord[]): StepRecord[] {
-    return rawSteps;
+    return rawSteps.map((step) => normalizeStep(step));
 }
 
 export function calculateSteps(options: Options): StepRecord[] {
