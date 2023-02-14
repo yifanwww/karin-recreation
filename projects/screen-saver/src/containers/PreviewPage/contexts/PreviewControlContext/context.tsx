@@ -111,7 +111,7 @@ export const PreviewControlProvider: React.FC = ({ children }) => {
         if (state.play) {
             const lastFrame = getNearestFrame(steps[steps.length - 1].time);
 
-            timerRef.current = window.setInterval(autoNextFrame, FRAME_PERIOD / 4, lastFrame);
+            timerRef.current = window.setInterval(autoNextFrame, FRAME_PERIOD, lastFrame);
         } else if (timerRef.current) {
             window.clearInterval(timerRef.current);
             timerRef.current = undefined;

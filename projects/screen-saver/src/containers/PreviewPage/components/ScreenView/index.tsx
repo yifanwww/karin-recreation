@@ -4,18 +4,21 @@ import { useEffect, useRef } from 'react';
 
 import { ImageAssetName, ImageAssets } from 'src/assets';
 import { SCREEN_SIZE } from 'src/constants/preview';
-import { createImageElement } from 'src/utils/image';
+import { createImages } from 'src/utils/image';
 import { useCurrentStep } from '../../contexts/PreviewControlContext';
 
 import css from './styles.module.css';
 
-async function paint(canvas: HTMLCanvasElement, imageName: ImageAssetName, position: Vector2) {
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+const { getImage } = createImages(ImageAssets);
 
+function clearCanvas(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+async function paintImage(context: CanvasRenderingContext2D, imageName: ImageAssetName, position: Vector2) {
     const image = ImageAssets[imageName];
-    const img = await createImageElement(image);
-    ctx.drawImage(img, position.x, position.y, image.size.x * image.scale.x, image.size.y * image.scale.y);
+    const img = await getImage(imageName);
+    context.drawImage(img, position.x, position.y, image.size.x * image.scale.x, image.size.y * image.scale.y);
 }
 
 export interface ScreenViewProps {
@@ -25,13 +28,18 @@ export interface ScreenViewProps {
 export const ScreenView: React.FC<ScreenViewProps> = ({ className }) => {
     const { position, step } = useCurrentStep();
 
-    const ref = useRef<HTMLCanvasElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        const canvas = ref.current;
+        if (!position || !step) return;
 
-        if (canvas && position && step) {
-            paint(canvas, step.imageName, position);
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+            clearCanvas(canvas, ctx);
+            paintImage(ctx, step.imageName, position);
         }
     }, [position, step]);
 
@@ -41,7 +49,7 @@ export const ScreenView: React.FC<ScreenViewProps> = ({ className }) => {
                 <div />
             </div>
             <div className={css['canvas-container']}>
-                <canvas ref={ref} className={css.canvas} height={SCREEN_SIZE.y} width={SCREEN_SIZE.x} />
+                <canvas ref={canvasRef} className={css.canvas} height={SCREEN_SIZE.y} width={SCREEN_SIZE.x} />
             </div>
         </div>
     );
