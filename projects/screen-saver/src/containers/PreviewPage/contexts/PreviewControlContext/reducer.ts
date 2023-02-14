@@ -1,8 +1,10 @@
 import type { ImmerReducer } from 'use-immer';
 
 import { Millisecond } from 'src/types/primitives';
-import { getNearestFrame } from 'src/utils/preview';
-import type { PreviewControlContextState } from './types';
+import type { PreviewControlContextState, StepContextState } from './types';
+
+export type ReducerState = Pick<PreviewControlContextState, 'currentFrame' | 'play'> &
+    Pick<StepContextState, 'maxFrame'>;
 
 export type ReducerAction =
     | { type: 'set-play'; enabled: boolean }
@@ -12,7 +14,7 @@ export type ReducerAction =
     | { type: 'to-first-frame' }
     | { type: 'to-last-frame' };
 
-export const reducer: ImmerReducer<PreviewControlContextState, ReducerAction> = (state, action) => {
+export const reducer: ImmerReducer<ReducerState, ReducerAction> = (state, action) => {
     let never: never;
     switch (action.type) {
         case 'set-play':
@@ -25,8 +27,7 @@ export const reducer: ImmerReducer<PreviewControlContextState, ReducerAction> = 
 
         case 'next-frame': {
             const num = Math.max(action.num ?? 1, 1);
-            const lastFrame = getNearestFrame(state.steps[state.steps.length - 1].time);
-            state.currentFrame = Math.min(state.currentFrame + num, lastFrame);
+            state.currentFrame = Math.min(state.currentFrame + num, state.maxFrame);
             break;
         }
 
@@ -40,10 +41,9 @@ export const reducer: ImmerReducer<PreviewControlContextState, ReducerAction> = 
             state.currentFrame = 0;
             break;
 
-        case 'to-last-frame': {
-            state.currentFrame = getNearestFrame(state.steps[state.steps.length - 1].time);
+        case 'to-last-frame':
+            state.currentFrame = state.maxFrame;
             break;
-        }
 
         default:
             never = action;

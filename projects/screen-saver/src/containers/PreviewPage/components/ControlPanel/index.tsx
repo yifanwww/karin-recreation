@@ -11,15 +11,14 @@ import {
 import { Button, Spin, Tooltip } from 'antd';
 import clsx from 'clsx';
 import { Vector2 } from 'js-vectors';
-import { useContext } from 'react';
 
 import { Vector2View } from 'src/components/Vector2View';
 import { formatFrame } from 'src/utils/time';
 import {
-    PreviewControlContext,
     useControlOperations,
     useCurrentStep,
     useNextStep,
+    usePreviewPlayState,
 } from '../../contexts/PreviewControlContext';
 
 import css from './styles.module.scss';
@@ -29,7 +28,7 @@ export interface ControlPanelProps {
 }
 
 export const ControlPanel: React.FC<ControlPanelProps> = ({ className }) => {
-    const { play } = useContext(PreviewControlContext);
+    const { play } = usePreviewPlayState();
     const { frame, position, step, time } = useCurrentStep();
     const { nextStep } = useNextStep();
     const { changePlay, nextFrame, prevFrame, toFirstFrame, toLastFrame } = useControlOperations();

@@ -1,6 +1,7 @@
 import { Vector2 } from 'js-vectors';
 
 import { ImageAssets } from 'src/assets';
+import { FRAME_PERIOD } from 'src/constants/preview';
 import { Range } from 'src/types/misc';
 import { Millisecond } from 'src/types/primitives';
 import { StepCommonOption, StepConfigs, StepRecord } from './types';
@@ -11,7 +12,7 @@ type Options = {
         direction: Vector2;
         position: Vector2;
     };
-    maxSteps: number;
+    maxFrame: number;
     screen: Vector2;
 };
 
@@ -20,7 +21,9 @@ function findCurrentStepConfig<T extends StepCommonOption>(time: Millisecond, co
 }
 
 function calculateRawSteps(options: Options): StepRecord[] {
-    const { configs, initial, maxSteps, screen } = options;
+    const { configs, initial, maxFrame, screen } = options;
+
+    const maxTime = maxFrame * FRAME_PERIOD;
 
     let currTime: Millisecond = 0;
 
@@ -39,7 +42,7 @@ function calculateRawSteps(options: Options): StepRecord[] {
         },
     ];
 
-    const getAvaliablePosition = (): Range<Vector2> => {
+    const calculateAvaliablePosition = (): Range<Vector2> => {
         const image = ImageAssets[currDefault.imageName];
         return {
             min: image.contentSize.min.clone().mul(image.scale).neg(),
@@ -47,8 +50,8 @@ function calculateRawSteps(options: Options): StepRecord[] {
         };
     };
 
-    const getNextStep = (): StepRecord => {
-        const { max, min } = getAvaliablePosition();
+    const calculateNextStep = (): StepRecord => {
+        const { max, min } = calculateAvaliablePosition();
 
         const durationX =
             currDirection.x > 0 ? (max.x - currPosition.x) / currDirection.x : currPosition.x / -currDirection.x;
@@ -86,8 +89,24 @@ function calculateRawSteps(options: Options): StepRecord[] {
         };
     };
 
-    for (let i = 1; i < maxSteps; i++) {
-        steps.push(getNextStep());
+    while (true) {
+        const nextStep = calculateNextStep();
+        if (nextStep.time <= maxTime) {
+            steps.push(nextStep);
+        } else {
+            const prevStep = steps[steps.length - 1];
+            steps.push({
+                time: maxTime,
+                imageName: nextStep.imageName,
+                direction: nextStep.direction,
+                position: Vector2.lerp(
+                    prevStep.position,
+                    nextStep.position,
+                    (maxTime - prevStep.time) / (nextStep.time - prevStep.time),
+                ),
+            });
+            break;
+        }
     }
 
     return steps;

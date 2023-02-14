@@ -1,3 +1,3 @@
-export * from './context';
+export { PreviewControlProvider } from './context';
 export * from './hooks';
 export * from './types';

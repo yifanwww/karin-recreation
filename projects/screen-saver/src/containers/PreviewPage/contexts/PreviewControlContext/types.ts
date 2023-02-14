@@ -12,9 +12,11 @@ export type PreviewControlContextState = {
         position: Vector2;
     };
     stepConfigs: StepConfigs;
+};
 
+export type StepContextState = {
+    maxFrame: number;
     steps: StepRecord[];
-    maxSteps: number;
 };
 
 export type PreviewControlContextExtraData = {
