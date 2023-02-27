@@ -3,7 +3,7 @@ import { Vector2 } from 'js-vectors';
 import { ImageAssetName, ImageAssets } from 'src/assets';
 import { FRAME_PERIOD } from 'src/constants/preview';
 import { Range } from 'src/types/misc';
-import { Millisecond } from 'src/types/primitives';
+import { Millisecond, Second } from 'src/types/primitives';
 import { getNearestFrameTime } from 'src/utils/preview';
 import { StepCommonOption, StepConfigs, StepRecord } from './types';
 
@@ -60,14 +60,14 @@ function calculateRawSteps(options: Options): StepRecord[] {
     const calculateNextStep = (): StepRecord => {
         const { max, min } = avaliableAreas[currDefault.imageName];
 
-        const durationX =
+        const durationX: Second =
             currDirection.x > 0 ? (max.x - currPosition.x) / currDirection.x : currPosition.x / -currDirection.x;
-        const durationY =
+        const durationY: Second =
             currDirection.y > 0 ? (max.y - currPosition.y) / currDirection.y : currPosition.y / -currDirection.y;
 
-        const duration = Math.min(durationX, durationY);
+        const duration: Second = Math.min(durationX, durationY);
 
-        currTime = currTime + duration;
+        currTime = currTime + duration * 1_000;
 
         if (durationX === durationY) {
             currPosition.set(currDirection.x > 0 ? max.x : min.x, currDirection.y > 0 ? max.y : min.y);

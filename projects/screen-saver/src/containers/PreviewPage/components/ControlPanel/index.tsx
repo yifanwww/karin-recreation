@@ -82,8 +82,14 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ className }) => {
                         {renderData('to position', <Vector2View vector={nextStep?.position ?? Vector2.ZERO} />)}
                     </div>
                     <div>
-                        {renderData('direction', <Vector2View vector={step?.direction ?? Vector2.ZERO} />)}
-                        {renderData('speed', <code>{(step?.direction ?? Vector2.ZERO).length().toFixed(2)}</code>)}
+                        {renderData(
+                            'direction',
+                            <span>
+                                <Vector2View vector={step?.direction ?? Vector2.ZERO} />
+                                <code>/s</code>
+                            </span>,
+                        )}
+                        {renderData('speed', <code>{(step?.direction ?? Vector2.ZERO).length().toFixed(2)}/s</code>)}
                     </div>
                 </div>
             </Spin>

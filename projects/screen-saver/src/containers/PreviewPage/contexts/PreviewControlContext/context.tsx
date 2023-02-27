@@ -13,7 +13,7 @@ import { reducer } from './reducer';
 import { PreviewControlContextValues, PreviewControlContextUpdaters, StepContextState } from './types';
 
 function getPreviewControlContextInitialState(): PreviewControlContextValues {
-    const initialDirection = new Vector2(-Math.sqrt(3) / 2, 0.5);
+    const initialDirection = new Vector2(-Math.sqrt(3) / 2, 0.5).mulScalar(300);
     const initialPosition = new Vector2(854, 436);
 
     return {
